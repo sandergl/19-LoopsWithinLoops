@@ -3,8 +3,8 @@ This project demonstrates NESTED LOOPS (i.e., loops within loops)
 in the context of TWO-DIMENSIONAL GRAPHICS.
 
 Authors: David Mutchler, Valerie Galluzzi, Mark Hays, Amanda Stouder,
-         their colleagues and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         their colleagues and Garrett Sanders.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import rosegraphics as rg
 
@@ -79,8 +79,46 @@ def draw_L(window, circle, r, c):
       :type c: int
     and m and n are small, positive integers.
     """
+    ox = circle.center.x
+    oy = circle.center.y
+    x = ox
+    y = oy
+    color = circle.fill_color
+    radius = circle.radius
+    for k in range(r):
+        for i in range(3):
+            cir = rg.Circle(rg.Point(x, y), radius)
+            cir.fill_color = color
+            cir.attach_to(window)
+            x = x + (2 * radius)
+        y = y + (2 * radius)
+        x = ox
+    x = ox
+    y = oy + (2 * radius * r)
+    for a in range(3):
+        for b in range(3):
+            cir = rg.Circle(rg.Point(x, y), radius)
+            cir.fill_color = color
+            cir.attach_to(window)
+            x = x + (2 * radius)
+        x = ox
+        y = y + (2 * radius)
+    x1 = ox + (6 * radius)
+    x = x1
+    y1 = oy + (2 * radius * r)
+    y = y1
+    for g in range(c):
+        for h in range(3):
+            cir = rg.Circle(rg.Point(x, y), radius)
+            cir.fill_color = color
+            cir.attach_to(window)
+            y = y + (2 * radius)
+        y = y1
+        x = x + (2 * radius)
+
+    window.render()
     # ------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # DONE: 2. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
 
@@ -120,6 +158,23 @@ def draw_wall_on_right(rectangle, n, window):
       :type window: rg.RoseWindow
     and n is a small, positive integer.
     """
+    urc = rectangle.get_upper_right_corner()
+    llc = rectangle.get_lower_left_corner()
+    ogu = urc
+    ogl = llc
+    for k in range(n):
+        for i in range(k + 1):
+            rec = rg.Rectangle(urc, llc)
+            rec.attach_to(window)
+            urc.x = urc.x - rec.get_width()
+            llc.x = llc.x - rec.get_width()
+            urc.y = urc.y + rec.get_height()
+            llc.y = llc.y + rec.get_height()
+            window.render(0.1)
+        urc.x = ogu.x
+        llc.x = ogl.x
+        urc.y = ogu.y + ((k + 1) * rectangle.get_height())
+        llc.y = ogl.y + ((k + 1) * rectangle.get_height())
     # ------------------------------------------------------------------
     # TODO: 3. Implement and test this function.
     #     The testing code is already written for you (above).
